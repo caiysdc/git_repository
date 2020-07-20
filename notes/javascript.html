@@ -1,0 +1,101 @@
+1、编写js代码
+    a、可直接嵌在网页的任何地方，通常放在<head></head>中：
+        <head>
+            <script type="text/javascript">
+                // 此处编写js代码，type默认为text/javascript，可不写
+            </script>
+        </head>
+    b、在单独的js文件中编写，通过<script src="js文件路径引入"></script>（利于代码维护及共用）
+
+2、运行js代码：通过html网页引入js文件，通过浏览器加载执行（以file://开头的地址无法执行联网等的js代码）
+
+3、基本语法：
+    a、每个语句以;结束(结尾;未作强制要求)，语句块用 {...}
+    b、注释：
+        // 行注释
+        /**/    块注释
+    c、js严格区分大小写
+
+4、数据类型
+    a、Number:
+        js不区分整数和浮点数，统一用Number: NaN表示非数值，Infinity表示无限大（数值超过Number所能表示的最大值时即为Infinity）
+        十六进制：0x开头，0-9 a-f 表示
+        Number四则运算：+ - * / %(求余)
+    b、字符串：以单引号''或双引号""括起来的任意文本
+        1、若字符串同时包含单引号和双引号，可通过转义字符来标识。   \n 换行  \t 制表符  \\ 表示\
+        2、ascii字符可以以\x##形式表示，unicode可以用\u####表示
+        3、多行字符串用反引号 `字符串`  来表示
+        4、字符串连接可使用 + 号或模板字符串  `${变量名}` 来表示
+        5、获取字符串长度：''.length,   通过下标获取字符串某个字符   'abc'[2]  // 'c',对字符串某个索引赋值无效且无报错，因字符串不可变。
+        6、字符串方法：
+            toUpperCase()：字符串全部转为大写
+            toLowerCase()：字符串全部转为小写
+            indexOf()：搜索指定字符串出现的位置，没有则返回-1  'hell0,world'.indexOf('world') // 6
+            substring(begin, end)：返回指定索引的子串
+            substr(begin, length)：返回指定起始索引和长度的子串
+            split('', length)：以指定字符将字符串拆分为数组
+    c、布尔值：true  false
+        &&  ||  !  > >= < <= ==(自动转投数据类型再进行比较)  ===（严格比较值及其数据类型）
+        NaN与其他所有值均不相等，所括其本身（==或===判定结果均为不相等），判断NaN值通过函数isNaN(NaN)判断
+        注意：在js中，1/3与1-2/3并不相等，因为计算机无法精确表示无限循环小数，若需比较两个浮点数是否相等，可计算他们之差的绝对值是否小于某个阈值，Math.abs(1/3-(1-2/3)) < 0.0000001  // true
+    d、null和undefined：分别表示空和未定义
+    e、数组：
+        1、定义： const a = [1, '2']  const b = new Array(1, '2')
+        2、访问： 通过下标访问  a[0]  b[1]  //  下标越界时返回undefined,不报错
+        3、数组方法及属性：
+            length：返回数组长度，给数组length赋新值时会导致数组大小的变化（新值小于length时后面的值被清除，大于length时以undefined往数组后面补值）
+            indexOf(item)：返回指定元素的索引，没有则返回-1 
+            slice(begin, end)：类似substring,返回 新 的数组，含头不含尾
+            push()：数组末尾添加若干元素，返回新的数组长度
+            pop()：删除数组末尾元素，返回被删除元素，若数组为空则返回undefined
+            unshift()：往数组头部添加若干元素
+            shift()：删除数组头部元素，返回被删除元素
+            sort()：对数组进行排序
+            reverse()：反转数组元素  ['one', 'two', 'three'].reverse()      // ['three', 'two', 'one']
+            splice(begin, length, ...items)：从下标begin开始删除长度为length的元素，并在对应位置添加元素items
+            concat()：两数组合并并返回新的数组  [1,3,5].concat([2,4,6],a,[],...) // [1,3,5,2,4,6]
+            join()：数组以指定字符连接为字符串，默认为','，若数组元素不是字符串，则自动转为字符串再进行连接   // [[1,2,3],'a',4,{'b':1}].join('-')    "1,2,3-a-4-[object Object]"
+        4、可通过数组下标访问数组或赋值，若下标越界，则会改变数组的大小 [][2]=5 // [undefined, undefined,5] 注：不建议直接修改Array的大小，访问索引时要确保索引不会越界。
+    f、对象(key只能是字符串)：
+        1、定义：const a = { name: 'dog' } const b = new Object()
+        2、访问：a.name a['name']
+        3、删除属性：delete a.name
+        4、对象方法：
+            'name' in a     // 判断对象a是否存在属性name，存在返回true，name属性可以是继承父类的
+            hasOwnProperty('name')：判断对象自身是否拥有该属性，不包括从父类继承，存在返回true，否则返回false
+        
+5、变量：由大小写英文、数字、$和_组成，不能数字开头，不能是js关键字。（可为中文，谨慎使用）
+        a、申明变量： var
+        b、利用=对变量进行赋值： const a = 3
+        c、动态语言：变量本身类型不固定的语言，相对而言更灵活
+           静态语言：变量本身类型固定，定义时需指定变量类型，若赋值时类型不匹配则会报错
+        d、没有通过var声明的变量会被视为全局变量，使用var声明的变量使用范围将被限制在该变量被申明的函数体内，同名变量在不同的函数体内互不冲突，避免同名变量在作用域内相互产生影响。使用'use strict'模式可避免该问题，变量未被申明便使用时系统自动抛错。
+
+6、条件判断：if(){}else if(){}else{}
+        false: null  undefined  0 NaN  false  ''
+
+7、循环
+    a、for(let i=0;i < 10; i++) {}，for循环3条件均可省略，若没有退出循环的判断条件，使用break跳出循环。
+    b、for(let i in {}){}，循环对象的所有属性，可通过hasOwnProperty()过滤掉对象继承的属性。for in可循环数组，返回以字符串表示的下标'0','1','2'
+    c、while循环： while(){}
+    d、do while循环：do{ 循环体 }while(条件)，循环体至少执行1次
+
+
+8、Map和Set
+    a、Map：一组键值对的结构，具有极快的查找速度
+        定义： const m1 = new Map();  const m2 = new Map([['Bob', 99]])
+        访问： m2.get('Bob')  // 99
+        新增： m2.set('Adam', 100)  // key唯一，多次通过相同的key存值会覆盖之前的值
+        方法：
+            has('abc'); //判断是否存在为字符串abc的key值
+            delete('abc'); // 删除key为字符串abc的键值对，成功删除返回true
+            forEach((v, k)=>{})
+            values()
+            keys()
+    b、Set：存储key的集合，key不能重复，重复元素的key被自动过滤
+        定义： const s1 = new Set(); const s2 = new Set([1, 'a', '3'])
+        新增：s1.add(key)
+        删除：s1.delete(key)，成功返回true
+        方法：
+            values()/keys()
+            forEach((i)=>{})
