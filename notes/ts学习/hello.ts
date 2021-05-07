@@ -14,10 +14,10 @@
 //   return args;
 // }
 // hello2([1,2,3,4]) 
-function padLeft(value:string, padding:number):string;
-function padLeft(value:string, padding:string):string;
-function padLeft(value:any, padding:any):string {
-  if (typeof padding === 'string'){
+function padLeft(value: string, padding: number): string;
+function padLeft(value: string, padding: string): string;
+function padLeft(value: any, padding: any): string {
+  if (typeof padding === 'string') {
     return "string"
   } else if (typeof padding === 'number') {
     return "number"
@@ -25,34 +25,34 @@ function padLeft(value:any, padding:any):string {
     return "other"
   }
 }
-console.log(padLeft("a",7));
-function test(a:number=3,b?:string):string{
-  if (typeof b === 'string') return a+b;
+console.log(padLeft("a", 7));
+function test(a: number = 3, b?: string): string {
+  if (typeof b === 'string') return a + b;
   return '';
 }
 console.log(test(undefined))
 abstract class Animal {
-  name:string;
+  name: string;
   // constructor(){}
-  constructor(name:string){
+  constructor(name: string) {
     this.name = name;
   }
-  abstract work():void;
+  abstract work(): void;
 }
 abstract class ChildAnimal extends Animal {
-  constructor(name:string){
+  constructor(name: string) {
     super(name)
   }
-  abstract run():void;
+  abstract run(): void;
 }
-class Dog extends ChildAnimal   {
-  constructor(name:string){
+class Dog extends ChildAnimal {
+  constructor(name: string) {
     super(name)
   }
-  work(){
+  work() {
     console.log(`${this.name}在工作`)
   }
-  run(){
+  run() {
     console.log(`${this.name}在运动`)
   }
 }
@@ -60,44 +60,46 @@ const dog1 = new Dog('小黑');
 dog1.work();
 dog1.run();
 
-type validateObj  = {
+type validateObj = {
   label: string,
   value: string,
 }
 interface face1 {
   label: string,
   value: string,
-}interface face1 {
+}
+interface face1 {
   age: number;
   gender: string;
+  setAge(age: number): void;
 }
-type user = {a:string}&{b:string}
-const user:user={a:'1',b:'2'}
-const obj = { label: '张三', value:'zhangsan', age: 20, gender: '男' }
-const func1 = (obj:face1):void => {
+type user = { a: string } & { b: string }
+const user: user = { a: '1', b: '2' }
+const obj = { label: '张三', value: 'zhangsan', age: 20, gender: '男', setAge(age: number) { this.age = age } }
+const func1 = (obj: face1): void => {
   console.log(obj)
 }
 func1(obj)
 // 类装饰器
-function logClass1(param: string){
+function logClass1(param: string) {
   return (target: any) => {
     console.log('类装饰器1' + param)
   }
 }
 // 类装饰器
-function logClass2(param: string){
+function logClass2(param: string) {
   return (target: any) => {
     console.log('类装饰器2' + param)
   }
 }
 // 方法装饰器1
-function logMethod1(param: string){
+function logMethod1(param: string) {
   return (target: any, methodName: string, desc: any) => {
     console.log('方法装饰器1', param, methodName, desc)
   }
 }
 // 方法装饰器2
-function logMethod2(param: string){
+function logMethod2(param: string) {
   return (target: any, methodName: string, desc: any) => {
     console.log('方法装饰器2', param, methodName, desc)
   }
@@ -139,13 +141,13 @@ class Test {
   age: number | undefined
 
   @logMethod1('logMethod1')
-  func1(){
+  func1() {
 
   }
 
   @logMethod2('logMethod2')
   func2(@logParam1('logParam1') name: string, @logParam2('logParam2') age: number) {
-    
+
   }
 }
 
